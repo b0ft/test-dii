@@ -5,6 +5,14 @@ import { Pasien } from "@/types/pasien"
 import { useEffect, useState } from "react"
 import Navbar from "@/components/Navbar"
 import { Button } from "@/components/ui/button"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
 const mockData: Pasien[] = [
     {
@@ -129,40 +137,40 @@ export default function DaftarPasien() {
                     onChange={e => setSearch(e.target.value)}
                 />
             </div>
-            <table className="w-full border border-gray-400 rounded-lg overflow-hidden">
-                <thead className="bg-gray-100">
-                    <tr>
-                        <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort("nama")}>Nama</th>
-                        <th className="px-4 py-2">NIK</th>
-                        <th className="px-4 py-2">Diagnosa Masuk</th>
-                        <th className="px-4 py-2 cursor-pointer" onClick={() => handleSort("tanggalMasuk")}>Tanggal Masuk</th>
-                        <th className="px-4 py-2">Dokter Penanggung Jawab</th>
-                        <th className="px-4 py-2">Ruangan</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table className="w-full border border-gray-400 rounded-lg overflow-hidden">
+                <TableHeader className="bg-gray-100">
+                    <TableRow>
+                        <TableHead className="px-4 py-2 hover:bg-gray-200 cursor-pointer" onClick={() => handleSort("nama")}>Nama</TableHead>
+                        <TableHead className="px-4 py-2 hover:bg-gray-200">NIK</TableHead>
+                        <TableHead className="px-4 py-2 hover:bg-gray-200">Diagnosa Masuk</TableHead>
+                        <TableHead className="px-4 py-2 hover:bg-gray-200 cursor-pointer" onClick={() => handleSort("tanggalMasuk")}>Tanggal Masuk</TableHead>
+                        <TableHead className="px-4 py-2 hover:bg-gray-200">Dokter Penanggung Jawab</TableHead>
+                        <TableHead className="px-4 py-2 hover:bg-gray-200">Ruangan</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
                     {loading ? (
-                        <tr>
-                            <td colSpan={6} className="px-4 py-2 text-center text-gray-500">Loading...</td>
-                        </tr>
+                        <TableRow>
+                            <TableCell colSpan={6} className="px-4 py-2 text-center text-gray-500">Loading...</TableCell>
+                        </TableRow>
                     ) : currentPasien.length > 0 ? (
                         <>{currentPasien.map((pasien, index) => (
-                            <tr key={index} className="hover:bg-gray-50">
-                                <td className="px-4 py-2">{pasien.nama}</td>
-                                <td className="px-4 py-2">{pasien.nik}</td>
-                                <td className="px-4 py-2">{pasien.diagnosaMasuk}</td>
-                                <td className="px-4 py-2">{pasien.tanggalMasuk}</td>
-                                <td className="px-4 py-2">{pasien.dokterPenanggungJawab}</td>
-                                <td className="px-4 py-2">{pasien.ruangan}</td>
-                            </tr>
+                            <TableRow key={index} className="hover:bg-gray-50">
+                                <TableCell className="px-4 py-2">{pasien.nama}</TableCell>
+                                <TableCell className="px-4 py-2">{pasien.nik}</TableCell>
+                                <TableCell className="px-4 py-2">{pasien.diagnosaMasuk}</TableCell>
+                                <TableCell className="px-4 py-2">{pasien.tanggalMasuk}</TableCell>
+                                <TableCell className="px-4 py-2">{pasien.dokterPenanggungJawab}</TableCell>
+                                <TableCell className="px-4 py-2">{pasien.ruangan}</TableCell>
+                            </TableRow>
                         ))}</>
                         ) : (
-                            <tr>
-                                <td colSpan={6} className="px-4 py-2 text-center text-gray-500">Tidak ada data</td>
-                            </tr>
+                            <TableRow>
+                                <TableCell colSpan={6} className="px-4 py-2 text-center text-gray-500">Tidak ada data</TableCell>
+                            </TableRow>
                         )}
-                </tbody>
-            </table>
+                </TableBody>
+            </Table>
             <div className="flex gap-2 mt-4">
                 <Button 
                     onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
